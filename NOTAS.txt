@@ -1,0 +1,2 @@
+** Usamos vite y vue 3.
+** Ya no se suelen crean los proyectos desde vue-cli, sino mediante vite.
