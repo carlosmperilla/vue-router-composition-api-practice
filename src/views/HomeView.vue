@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   export default {
     data() {
       return {
@@ -36,6 +36,24 @@
         this.$router.go(-1)
       }
     }
+  }
+</script> -->
+
+<!-- En Composition API  -->
+<script setup>
+  import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
+
+  // Con ref generamos la variable reactiva username.
+  const username = ref()
+  // Como no podemos usar this.$router
+  // por medio de vue-router usamos useRouter
+  // Para obtener acceso a las rutas.
+  const router = useRouter()
+
+  // Reemplazo del metodo iniciar.
+  function iniciar() {
+    router.push({ name: 'about' })
   }
 </script>
 

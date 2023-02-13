@@ -32,7 +32,7 @@
     </div>
 </template>
 
-<script>
+<!-- <script>
     export default {
         data() {
             return {
@@ -78,4 +78,55 @@
             )
         }
     }
+</script> -->
+
+<!-- En Composition API -->
+<script setup>
+    import { ref, watch, watchEffect } from 'vue'
+    import { useRoute } from 'vue-router'
+
+    // Generamos la variable reactiva.
+    const chats = ref()
+    // Obtenemos la ruta particular.
+    // Equivalente a this.$route
+    const route = useRoute()
+
+    // Creamos un observador.
+    // Mediante la función 'watch'
+    // Recordar que Composition API
+    // Se fundamenta en la Programación Funcional.
+    //
+    // Funciona exactamente como  this.$watch
+    // Explicada más arriba.
+    watch(
+        () => route.params,
+        (val) => {
+            console.log('update params', val)
+            chats.value = [
+                { id: 1, name: 'Ximena' },
+                { id: 2, name: 'Daniel' },
+                { id: 3, name: 'Miguel' },
+            ]
+        },
+        { immediate: true }
+    )
+
+    // Sobre si escoger Watch o WatchEffect.
+    // https://escuelavue.es/tips/vue-3-watch-vs-watcheffect/
+    // watchEffect en este caso no es adecuado porque observa,
+    // multiples variables reactiva, y la unica que nos interesa
+    // observar es 'route.params'.
+    // La ventaja principal es que observa desde el primer momento.
+    // Antes de que ocurran los cambios (el equivalente de
+    // un 'immediate: true' implicito)
+    // watchEffect(
+    //     (val) => {
+    //         console.log('update params', val)
+    //         chats.value = [
+    //             { id: 1, name: 'Ximena' },
+    //             { id: 2, name: 'Daniel' },
+    //             { id: 3, name: 'Miguel' },
+    //         ]
+    //     }
+    // )
 </script>
