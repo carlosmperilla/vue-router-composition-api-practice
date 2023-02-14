@@ -1,6 +1,9 @@
 
 // Importamos componentes de rutas.
 import HomeView from '../views/HomeView.vue';
+// Recordar que las variables no empiezan por números.
+// import 404View from '../views/404View.vue'; // Esta expresión no es valida.
+import NotFound from '../views/404View.vue';
 
 // import { createRouter, createWebHistory } from 'vue-router';
 import { createRouter, createWebHashHistory } from 'vue-router';
@@ -10,6 +13,15 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 // Usamos Arrow Functions en los imports porque
 // son funciones accedidas de forma asincrona.
 const routes = [
+  { path: '/404', component:  NotFound },
+  // Capta todas las rutas que no son las registradas.
+  // Y redirige a 404.
+  // Si probamos con los chats, redirige a los que sean
+  // con 'chatId' distinto de números, en caso contrario
+  // lo deja pasar.
+  // Obviamente la expresión entre parentesis es una expresión
+  // regular.
+  { path: '/:catchAll(.*)', redirect:  '/404' },
   // Manejo de redirecciones.
   // se puede usar la ruta (path) o el nombre.
   // { path: '/home', redirect: '/' },
@@ -62,7 +74,10 @@ const routes = [
     },
     children: [
       { 
-        path: ':chatId', 
+        // path: ':chatId', 
+        // Entre parentesis se encuentra una expresión regular
+        // que sirve para que valide solo decimales de multiples números. 
+        path: ':chatId(\\d+)',
         component: () => import('../views/ChatView.vue'),
         // Habilitamos el uso de props.
         // props: true,
