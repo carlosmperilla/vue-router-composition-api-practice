@@ -8,6 +8,9 @@ import NotFound from '../views/404View.vue';
 // import { createRouter, createWebHistory } from 'vue-router';
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+// Obtenemos la variable de entorno definida en el archivo .env
+const stage = import.meta.env.VITE_STAGE
+
 // Definimos componentes de rutas.
 // Cada ruta debe mapear a un componente.
 // Usamos Arrow Functions en los imports porque
@@ -118,6 +121,21 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 })
+
+// Si se da la condición añade la ruta.
+// Muy util para condicionar el acceso de los usuarios.
+// Más sobre rutas dinamicas:
+// https://router.vuejs.org/guide/advanced/dynamic-routing.html
+// Tambien se pueden remover rutas,
+// añadir rutas anidadas,
+// y añadir rutas en guardas.
+if (stage === 'test') {
+  router.addRoute({
+    path: '/profile',
+    name: 'profile', // La nombramos para poder usar router.hasRoute()
+    component: () => import('../views/ProfileView.vue')
+  })
+}
 
 // https://router.vuejs.org/guide/advanced/navigation-guards.html
 // Las guardas de navegación se pueden usar para redirecciones programadas.
